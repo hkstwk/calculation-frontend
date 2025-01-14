@@ -1,0 +1,68 @@
+<mat-card>
+  <h1>Compound Interest Calculation Input</h1>
+  <form [formGroup]="apiForm" (ngSubmit)="submitForm()">
+    <mat-form-field appearance="fill">
+      <mat-label>Original Principal Sum</mat-label>
+      <input matInput id="originalPrincipalSum" formControlName="originalPrincipalSum" type="number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nominal Annual Interest Rate</mat-label>
+      <input matInput id="nominalAnnualInterestRate" formControlName="nominalAnnualInterestRate" type="number" step="0.01" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Compounding Frequency</mat-label>
+      <input matInput id="compoundingFrequency" formControlName="compoundingFrequency" type="number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Time (in years)</mat-label>
+      <input matInput id="time" formControlName="time" type="number" />
+    </mat-form-field>
+
+    <mat-slide-toggle id="includeDetails" formControlName="includeDetails">Include details</mat-slide-toggle>
+    <mat-divider></mat-divider>
+
+    <div class="example-button-row">
+      <button mat-flat-button type="submit">Submit</button>
+      <button mat-stroked-button color="warn" type="button" (click)="clearForm()">Clear</button>
+    </div>
+  </form>
+</mat-card>
+
+
+<div class="calc-result" *ngIf="calculationServiceResponse$ | async as calculationServiceResponse">
+  <mat-card>
+    <mat-card-header>Compound Interest Calculation Results</mat-card-header>
+    <mat-card-title><p>Final Amount: {{ calculationServiceResponse.finalAmount | number:'1.2-2'}}</p></mat-card-title>
+    <div>
+      <h3>Details:</h3>
+      <table mat-table [dataSource]="calculationServiceResponse.details" class="mat-elevation-z8">
+        <ng-container matColumnDef="periodNumber">
+          <th mat-header-cell *matHeaderCellDef>Period</th>
+          <td mat-cell *matCellDef="let detail">{{ detail.periodNumber }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="startingAmount">
+          <th mat-header-cell *matHeaderCellDef>Starting Amount</th>
+          <td mat-cell *matCellDef="let detail">{{ detail.startingAmount | number:'1.2-2' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="interestForPeriod">
+          <th mat-header-cell *matHeaderCellDef>Interest</th>
+          <td mat-cell *matCellDef="let detail">{{ detail.interestForPeriod | number:'1.2-2'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="accumulatedValue">
+          <th mat-header-cell *matHeaderCellDef>Accumulated Value</th>
+          <td mat-cell *matCellDef="let detail">{{ detail.accumulatedValue | number:'1.2-2'}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['periodNumber', 'startingAmount', 'interestForPeriod', 'accumulatedValue']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['periodNumber', 'startingAmount', 'interestForPeriod', 'accumulatedValue']"></tr>
+      </table>
+    </div>
+  </mat-card>
+</div>
+

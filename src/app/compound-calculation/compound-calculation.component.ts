@@ -55,8 +55,9 @@ export class CompoundCalculationComponent implements AfterViewInit{
   apiForm: FormGroup;
   finalAmount?: number;
   detailsDatasource!: MatTableDataSource<any>;
-  length = 0;
+  length? = 0;
   displayedColumns: string[] = ['periodNumber', 'startingAmount', 'interestForPeriod', 'accumulatedValue'];
+  details?: any[];
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -78,9 +79,9 @@ export class CompoundCalculationComponent implements AfterViewInit{
       this.calculationService.callApi(this.apiForm.value)
         .subscribe(data =>{
           console.log(data);
-          const details = data.details;
-          this.length = details.length;
-          this.detailsDatasource = new MatTableDataSource(details);
+          this.details = data.details;
+          this.length = this.details?.length;
+          this.detailsDatasource = new MatTableDataSource(this.details);
           this.detailsDatasource.paginator = this.paginator;
           this.finalAmount = data.finalAmount;
 
@@ -99,13 +100,14 @@ export class CompoundCalculationComponent implements AfterViewInit{
       time: 1,
       includeDetails: true,
     });
+    this.finalAmount = undefined;
+    this.details = undefined;
   }
 
-  getDetailsPage(pageIndex: number, pageSize: number, sortOrder: string, details: any[]) {
+  getDetailsPage(pageIndex: number, pageSize: number, sortOrder: string, details: any[] | undefined) {
     console.log("getDetailsPage called. detailsDatasource.data = ", this.detailsDatasource.data);
-    const copyOfDetails: any[] = JSON.parse(JSON.stringify(details));
-    const slice = copyOfDetails.slice(pageIndex, pageSize);
-    console.log("Slice = ", slice, pageIndex, pageSize);
+    const slice = this.details?.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
+    console.log("Slice = ", slice, pageIndex, pageIndex);
     return slice;
   }
 
@@ -123,15 +125,20 @@ export class CompoundCalculationComponent implements AfterViewInit{
   private loadDetailsPage() {
     console.log("loadDetailsPage called;  ", this.detailsDatasource.data);
     console.log("paginator = ", this.paginator);
+    // @ts-ignore
     this.detailsDatasource.data = this.getDetailsPage(
       this.paginator?.pageIndex ?? 0,
       this.paginator?.pageSize ?? 6,
       "asc",
-      this.detailsDatasource.data);
+      this.details);
   }
 
   onPageChange($event: PageEvent) {
     console.log("onPageChange called");
+    console.log("pageSize = ", this.paginator.pageSize);
+    console.log("PageIndex = ", this.paginator.pageIndex);
+    console.log("Datasource ", this.detailsDatasource.data);
+    console.log("Details ", this.details);
     this.paginator.pageSize = $event.pageSize;
     this.paginator.pageIndex = $event.pageIndex;
     this.loadDetailsPage();

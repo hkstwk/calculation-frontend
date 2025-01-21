@@ -37,7 +37,7 @@
   <mat-card>
     <mat-card-header>Compound Interest Calculation Results</mat-card-header>
     <mat-card-title><p>Final Amount: {{ finalAmount | number:'1.2-2' }}</p></mat-card-title>
-    <div>
+    <div *ngIf="details">
       <h3>Details:</h3>
       <table mat-table class="mat-elevation-z8" [dataSource]="detailsDatasource" multiTemplateDataRows>
         <ng-container matColumnDef="periodNumber">

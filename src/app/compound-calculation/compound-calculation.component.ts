@@ -74,7 +74,8 @@ export class CompoundCalculationComponent implements AfterViewInit{
 
   submitForm() {
     console.log("Submit event");
-    console.log(this.paginator);
+    console.log("paginator = ", this.paginator);
+    this.detailsDatasource = new MatTableDataSource();
     if (this.apiForm.valid) {
       this.calculationService.callApi(this.apiForm.value)
         .subscribe(data =>{
@@ -102,6 +103,7 @@ export class CompoundCalculationComponent implements AfterViewInit{
     });
     this.finalAmount = undefined;
     this.details = undefined;
+    this.detailsDatasource = new MatTableDataSource();
   }
 
   getDetailsPage(pageIndex: number, pageSize: number, sortOrder: string, details: any[] | undefined) {
@@ -112,7 +114,7 @@ export class CompoundCalculationComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    this.paginator.page
+    this.paginator?.page
       .pipe(
         tap(() => {
           console.log("PageEvent emitted", this.paginator.page);

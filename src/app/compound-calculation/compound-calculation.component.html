@@ -1,77 +1,84 @@
-<mat-card>
-  <h1>Compound Interest Calculation Input</h1>
-  <form [formGroup]="apiForm" (ngSubmit)="submitForm()">
-    <mat-form-field appearance="fill">
-      <mat-label>Original Principal Sum</mat-label>
-      <input matInput id="originalPrincipalSum" formControlName="originalPrincipalSum" type="number"/>
-    </mat-form-field>
+<mat-grid-list [cols]="2">
+  <mat-grid-tile>
+    <mat-card class="mat-elevation-z8 calc-input-card">
+      <mat-card-header>Compound Interest Calculation Input</mat-card-header>
+      <form [formGroup]="apiForm" (ngSubmit)="submitForm()">
+        <mat-form-field appearance="fill">
+          <mat-label>Original Principal Sum</mat-label>
+          <input matInput id="originalPrincipalSum" formControlName="originalPrincipalSum" type="number"/>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Nominal Annual Interest Rate</mat-label>
-      <input matInput id="nominalAnnualInterestRate" formControlName="nominalAnnualInterestRate" type="number"
-             step="0.01"/>
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Nominal Annual Interest Rate</mat-label>
+          <input matInput id="nominalAnnualInterestRate" formControlName="nominalAnnualInterestRate" type="number"
+                 step="0.01"/>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Compounding Frequency</mat-label>
-      <input matInput id="compoundingFrequency" formControlName="compoundingFrequency" type="number"/>
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Compounding Frequency</mat-label>
+          <input matInput id="compoundingFrequency" formControlName="compoundingFrequency" type="number"/>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Time (in years)</mat-label>
-      <input matInput id="time" formControlName="time" type="number"/>
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Time (in years)</mat-label>
+          <input matInput id="time" formControlName="time" type="number"/>
+        </mat-form-field>
 
-    <mat-slide-toggle id="includeDetails" formControlName="includeDetails">Include details</mat-slide-toggle>
-    <mat-divider></mat-divider>
+        <mat-slide-toggle id="includeDetails" formControlName="includeDetails">Include details</mat-slide-toggle>
+        <mat-divider></mat-divider>
 
-    <div class="example-button-row">
-      <button mat-flat-button type="submit">Submit</button>
-      <button mat-stroked-button color="warn" type="button" (click)="clearForm()">Clear</button>
+        <mat-card-actions class="calculation-actions">
+          <button mat-flat-button type="submit">Submit</button>
+          <button mat-stroked-button color="warn" type="button" (click)="clearForm()">Clear</button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div *ngIf="finalAmount">
+      <mat-card class="mat-elevation-z16 calc-result-card">
+        <mat-card-header>Compound Interest Calculation Results</mat-card-header>
+        <mat-card-title>Final Amount: {{ finalAmount | number:'1.2-2' }}</mat-card-title>
+        <mat-card-content>
+          <div *ngIf="details">
+            <h3>Details:</h3>
+            <table mat-table class="mat-elevation-z8" [dataSource]="detailsDatasource" multiTemplateDataRows>
+              <ng-container matColumnDef="periodNumber">
+                <th mat-header-cell *matHeaderCellDef>#</th>
+                <td mat-cell *matCellDef="let detail">{{ detail.periodNumber }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="startingAmount">
+                <th mat-header-cell *matHeaderCellDef>Starting value</th>
+                <td mat-cell *matCellDef="let detail">{{ detail.startingAmount | number:'1.2-2' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="interestForPeriod">
+                <th mat-header-cell *matHeaderCellDef>Interest</th>
+                <td mat-cell *matCellDef="let detail">{{ detail.interestForPeriod | number:'1.2-2' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="accumulatedValue">
+                <th mat-header-cell *matHeaderCellDef>Accumulated value</th>
+                <td mat-cell *matCellDef="let detail">{{ detail.accumulatedValue | number:'1.2-2' }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+            </table>
+            <mat-paginator class="mat-elevation-z8"
+                           [pageSize]="6"
+                           [pageSizeOptions]="[3,6,12]"
+                           [length]=length
+                           (page)=onPageChange($event)
+                           showFirstLastButtons>
+            </mat-paginator>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
-  </form>
-</mat-card>
-
-
-<div class="calc-result" *ngIf="finalAmount">
-  <mat-card>
-    <mat-card-header>Compound Interest Calculation Results</mat-card-header>
-    <mat-card-title><p>Final Amount: {{ finalAmount | number:'1.2-2' }}</p></mat-card-title>
-    <div *ngIf="details">
-      <h3>Details:</h3>
-      <table mat-table class="mat-elevation-z8" [dataSource]="detailsDatasource" multiTemplateDataRows>
-        <ng-container matColumnDef="periodNumber">
-          <th mat-header-cell *matHeaderCellDef>#</th>
-          <td mat-cell *matCellDef="let detail">{{ detail.periodNumber }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="startingAmount">
-          <th mat-header-cell *matHeaderCellDef>Starting value</th>
-          <td mat-cell *matCellDef="let detail">{{ detail.startingAmount | number:'1.2-2' }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="interestForPeriod">
-          <th mat-header-cell *matHeaderCellDef>Interest</th>
-          <td mat-cell *matCellDef="let detail">{{ detail.interestForPeriod | number:'1.2-2' }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="accumulatedValue">
-          <th mat-header-cell *matHeaderCellDef>Accumulated value</th>
-          <td mat-cell *matCellDef="let detail">{{ detail.accumulatedValue | number:'1.2-2' }}</td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-      </table>
-      <mat-paginator class="mat-elevation-z8"
-                     [pageSize]="6"
-                     [pageSizeOptions]="[3,6,12]"
-                     [length]=length
-                     (page) = onPageChange($event)
-                     showFirstLastButtons>
-      </mat-paginator>
-    </div>
-  </mat-card>
-</div>
+  </mat-grid-tile>
+</mat-grid-list>
 

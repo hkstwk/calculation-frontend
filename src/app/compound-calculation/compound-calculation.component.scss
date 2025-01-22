@@ -1,6 +1,6 @@
 .container {
   /*font-family: Arial, sans-serif;*/
-  max-width: 100%;
+  max-width: 850px;
   margin: 20px auto;
   display: flex;
   flex-wrap: wrap;
@@ -13,6 +13,25 @@ mat-card {
   margin: 0;
   padding: 20px;
   box-sizing: content-box;
+}
+
+.calc-input-card {
+  margin: 20px 10px;
+  max-width:474px;
+}
+
+.calc-result-card {
+  margin: 20px 10px;
+  max-width:474px;
+}
+
+.calculation-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.calculation-actions button {
+  margin-right: 5px;
 }
 
 /* Ensure cards stack vertically on smaller screens */

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CalculationService} from '../services/calculation.service';
 import {DecimalPipe, NgIf} from '@angular/common';
-import {MatCard, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -19,6 +19,7 @@ import {MatDivider} from '@angular/material/divider';
 import {MatButton} from '@angular/material/button';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {tap} from 'rxjs';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-compound-calculation',
@@ -47,7 +48,11 @@ import {tap} from 'rxjs';
     MatCardTitle,
     MatHeaderRowDef,
     MatRowDef,
-    MatPaginator
+    MatPaginator,
+    MatCardContent,
+    MatGridList,
+    MatGridTile,
+    MatCardActions
   ],
   styleUrls: ['./compound-calculation.component.scss']
 })

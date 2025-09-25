@@ -1,9 +1,101 @@
-<mat-grid-list [cols]="2">
-  <mat-grid-tile>
+<div class="container">
+  <div class="color-scheme-selector">
+    <button (click)="changeTheme(ThemeMode.LIGHT)">Light</button>
+    <button (click)="changeTheme(ThemeMode.DARK)">Dark</button>
+    <button (click)="changeTheme(ThemeMode.SYSTEM)">System</button>
+  </div>
+  <div class="color-scheme-section">
+    <div class="color-item primary">
+      <div class="color-item-name">Primary</div>
+      <div>
+        <div class="color-item-code">--mat-sys-primary</div>
+        <div class="color-item-code">--mat-sys-on-primary</div>
+      </div>
+    </div>
+    <div class="color-item surface">
+      <div class="color-item-name">Surface</div>
+      <div>
+        <div class="color-item-code">--mat-sys-surface</div>
+        <div class="color-item-code">--mat-sys-on-surface</div>
+      </div>
+    </div>
+    <div class="color-item error">
+      <div class="color-item-name">Error</div>
+      <div>
+        <div class="color-item-code">--mat-sys-error</div>
+        <div class="color-item-code">--mat-sys-on-error</div>
+      </div>
+    </div>
+    <div class="color-item outline">
+      <div class="color-item-name">Outline</div>
+      <div>
+        <div class="color-item-code">--mat-sys-outline</div>
+        <div class="color-item-code">--mat-sys-on-outline</div>
+      </div>
+    </div>
+    <div class="color-item outline-variant">
+      <div class="color-item-name">Outline Variant</div>
+      <div>
+        <div class="color-item-code">--mat-sys-outline-variant</div>
+        <div class="color-item-code">--mat-sys-on-outline-variant</div>
+      </div>
+    </div>
+  </div>
+  <div class="color-scheme-section">
+    <div class="color-item primary-container">
+      <div class="color-item-name">Primary Container</div>
+      <div>
+        <div class="color-item-code">--mat-sys-primary-container</div>
+        <div class="color-item-code">--mat-sys-on-primary-container</div>
+      </div>
+    </div>
+    <div class="color-item secondary">
+      <div class="color-item-name">Secondary</div>
+      <div>
+        <div class="color-item-code">--mat-sys-secondary</div>
+        <div class="color-item-code">--mat-sys-on-secondary</div>
+      </div>
+    </div>
+    <div class="color-item secondary-container">
+      <div class="color-item-name">Secondary Container</div>
+      <div>
+        <div class="color-item-code">--mat-sys-secondary-container</div>
+        <div class="color-item-code">--mat-sys-on-secondary-container</div>
+      </div>
+    </div>
+    <div class="color-item tertiary">
+      <div class="color-item-name">Tertiary</div>
+      <div>
+        <div class="color-item-code">--mat-sys-tertiary</div>
+        <div class="color-item-code">--mat-sys-on-tertiary</div>
+      </div>
+    </div>
+    <div class="color-item tertiary-container">
+      <div class="color-item-name">Tertiary Container</div>
+      <div>
+        <div class="color-item-code">--mat-sys-tertiary-container</div>
+        <div class="color-item-code">--mat-sys-on-tertiary-container</div>
+      </div>
+    </div>
+    <div class="color-item error-container">
+      <div class="color-item-name">Error Container</div>
+      <div>
+        <div class="color-item-code">--mat-sys-error-container</div>
+        <div class="color-item-code">--mat-sys-on-error-container</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="calc-container">
+  <div class="calc-intro">
+    <h1>bla bla bla</h1>
+  </div>
+  <div class="calc-details">
     <mat-card class="mat-elevation-z8 calc-input-card">
+      <img mat-card-image src="img/related-1.jpg" alt="bla">
       <mat-card-header>Compound Interest Calculation Input</mat-card-header>
       <form [formGroup]="apiForm" (ngSubmit)="submitForm()">
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="mat-form-field">
           <mat-label>Original Principal Sum</mat-label>
           <input matInput id="originalPrincipalSum" formControlName="originalPrincipalSum" type="number"/>
         </mat-form-field>
@@ -20,12 +112,19 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill">
+          <mat-label>Monthly deposit</mat-label>
+          <input matInput id="monthlyDeposit" formControlName="monthlyDeposit" type="number"/>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
           <mat-label>Time (in years)</mat-label>
           <input matInput id="time" formControlName="time" type="number"/>
         </mat-form-field>
 
-        <mat-slide-toggle id="includeDetails" formControlName="includeDetails">Include details</mat-slide-toggle>
-        <mat-divider></mat-divider>
+        <div class="toggles">
+          <mat-slide-toggle id="depositAtStart" formControlName="depositAtStart">Deposit at start</mat-slide-toggle>
+          <mat-slide-toggle id="includeDetails" formControlName="includeDetails">Include details</mat-slide-toggle>
+        </div>
 
         <mat-card-actions class="calculation-actions">
           <button mat-flat-button type="submit">Submit</button>
@@ -33,52 +132,47 @@
         </mat-card-actions>
       </form>
     </mat-card>
-  </mat-grid-tile>
+    <mat-card class="mat-elevation-z8 calc-result-card" *ngIf="finalAmount">
+      <mat-card-header>Compound Interest Calculation Results</mat-card-header>
+      <mat-card-title>Final Amount: {{ finalAmount | number:'1.2-2' }}</mat-card-title>
+      <mat-card-content>
+        <div *ngIf="details">
+          <h3>Details:</h3>
+          <table mat-table class="mat-elevation-z8" [dataSource]="detailsDatasource" multiTemplateDataRows>
+            <ng-container matColumnDef="periodNumber">
+              <th mat-header-cell *matHeaderCellDef>#</th>
+              <td mat-cell *matCellDef="let detail">{{ detail.periodNumber }}</td>
+            </ng-container>
 
-  <mat-grid-tile>
-    <div *ngIf="finalAmount">
-      <mat-card class="mat-elevation-z16 calc-result-card">
-        <mat-card-header>Compound Interest Calculation Results</mat-card-header>
-        <mat-card-title>Final Amount: {{ finalAmount | number:'1.2-2' }}</mat-card-title>
-        <mat-card-content>
-          <div *ngIf="details">
-            <h3>Details:</h3>
-            <table mat-table class="mat-elevation-z8" [dataSource]="detailsDatasource" multiTemplateDataRows>
-              <ng-container matColumnDef="periodNumber">
-                <th mat-header-cell *matHeaderCellDef>#</th>
-                <td mat-cell *matCellDef="let detail">{{ detail.periodNumber }}</td>
-              </ng-container>
+            <ng-container matColumnDef="startingAmount">
+              <th mat-header-cell *matHeaderCellDef>Starting value</th>
+              <td mat-cell *matCellDef="let detail">{{ detail.startingAmount | number:'1.2-2' }}</td>
+            </ng-container>
 
-              <ng-container matColumnDef="startingAmount">
-                <th mat-header-cell *matHeaderCellDef>Starting value</th>
-                <td mat-cell *matCellDef="let detail">{{ detail.startingAmount | number:'1.2-2' }}</td>
-              </ng-container>
+            <ng-container matColumnDef="interestForPeriod">
+              <th mat-header-cell *matHeaderCellDef>Interest</th>
+              <td mat-cell *matCellDef="let detail">{{ detail.interestForPeriod | number:'1.2-2' }}</td>
+            </ng-container>
 
-              <ng-container matColumnDef="interestForPeriod">
-                <th mat-header-cell *matHeaderCellDef>Interest</th>
-                <td mat-cell *matCellDef="let detail">{{ detail.interestForPeriod | number:'1.2-2' }}</td>
-              </ng-container>
+            <ng-container matColumnDef="accumulatedValue">
+              <th mat-header-cell *matHeaderCellDef>Accumulated value</th>
+              <td mat-cell *matCellDef="let detail">{{ detail.accumulatedValue | number:'1.2-2' }}</td>
+            </ng-container>
 
-              <ng-container matColumnDef="accumulatedValue">
-                <th mat-header-cell *matHeaderCellDef>Accumulated value</th>
-                <td mat-cell *matCellDef="let detail">{{ detail.accumulatedValue | number:'1.2-2' }}</td>
-              </ng-container>
+            <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-              <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-            </table>
-            <mat-paginator class="mat-elevation-z8"
-                           [pageSize]="6"
-                           [pageSizeOptions]="[3,6,12]"
-                           [length]=length
-                           (page)=onPageChange($event)
-                           showFirstLastButtons>
-            </mat-paginator>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </mat-grid-tile>
-</mat-grid-list>
+          </table>
+          <mat-paginator class="mat-elevation-z8"
+                         [pageSize]="6"
+                         [pageSizeOptions]="[3,6,12]"
+                         [length]=length
+                         (page)=onPageChange($event)
+                         showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
 

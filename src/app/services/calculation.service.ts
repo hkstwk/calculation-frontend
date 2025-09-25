@@ -11,6 +11,7 @@ export class CalculationService {
   constructor(private http: HttpClient) {}
 
   callApi(requestBody: any): Observable<any> {
+    console.log(requestBody);
     return this.http.post<any>(this.apiUrl, requestBody);
   }
 }

@@ -1,28 +1,24 @@
-.container {
-  /*font-family: Arial, sans-serif;*/
-  max-width: 850px;
-  margin: 20px auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.calc-container {
+  padding: 6.4rem 3.2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-content: center;
+  gap: 3.2rem;
 }
 
 mat-card {
-  flex: 1 1 calc(50% - 20px); /* Take 50% width minus gap */
-  max-width: calc(100% - 20px);
-  margin: 0;
-  padding: 20px;
-  box-sizing: content-box;
+  padding: 2.4rem;
 }
 
 .calc-input-card {
-  margin: 20px 10px;
-  max-width:474px;
+  display: flex;
+  width: 100%;
 }
 
 .calc-result-card {
-  margin: 20px 10px;
-  max-width:474px;
+  display: flex;
+  width: 100%;
 }
 
 .calculation-actions {
@@ -44,6 +40,7 @@ mat-card {
 
 .calc-result {
   display: flex;
+  flex-direction: column;
 }
 
 .example-button-row {
@@ -54,31 +51,6 @@ mat-card {
 .example-button-row .mat-mdc-button-base {
   margin: 8px 8px 8px 0;
 }
-
-/*.button-group {*/
-/*  display: flex;*/
-/*  gap: 10px;*/
-/*  margin-top: 10px;*/
-/*}*/
-
-/*.button-group button {*/
-/*  padding: 10px 20px;*/
-/*  background-color: #007BFF;*/
-/*  color: #fff;*/
-/*  border: none;*/
-/*  border-radius: 5px;*/
-/*  font-size: 14px;*/
-/*  cursor: pointer;*/
-/*  transition: background-color 0.3s;*/
-/*}*/
-
-/*.button-group button:hover {*/
-/*  background-color: #0056b3;*/
-/*}*/
-
-/*.button-group button:active {*/
-/*  background-color: #003d80;*/
-/*}*/
 
 table {
   width: 100%;
@@ -105,14 +77,147 @@ form label {
 
 form input {
   flex: 1;
-  padding: 5px;
-  font-size: 14px;
+  padding: 1.2rem;
+  font-size: 1.6rem;
   border: none;
-  border-bottom: 1px solid #ccc;
   outline: none;
   transition: border-bottom-color 0.3s;
 }
 
 form input:focus {
   border-bottom-color: #007BFF;
+}
+
+.toggles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: left;
+  gap: 3.2rem
+}
+
+mat-card-actions {
+  padding-top: 2.4rem;
+}
+
+mat-card-header {
+  font: var(--mat-sys-headline-large);
+  //font-size: var(--mat-sys-headline-medium-size);
+}
+
+mat-label {
+
+}
+
+.calc-intro {
+  grid-row: 1;
+  grid-column: span 2
+}
+
+.calc-details {
+  grid-row: 2;
+  grid-column: span 2;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-content: center;
+  gap: 3.2rem;
+}
+
+.color-scheme-section {
+  max-width: 41.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  margin: 2.4rem auto 0;
+
+  border-radius: var(--mat-sys-corner-small);
+  border: 1px solid var(--mat-sys-outline);
+  overflow: hidden;
+}
+
+.color-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem;
+  border: none;
+  border-radius: 0;
+}
+
+.color-item:not(:last-child) {
+  border-bottom: 1px solid var(--mat-sys-outline);
+}
+
+.primary {
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+}
+
+.surface {
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}
+
+.outline {
+  background-color: var(--mat-sys-outline);
+  color: var(--mat-sys-on-outline);
+}
+
+.outline-variant {
+  background-color: var(--mat-sys-outline-variant);
+  color: var(--mat-sys-on-outline-variant);
+}
+
+.primary-container {
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.secondary{
+  background-color: var(--mat-sys-secondary);
+  color: var(--mat-sys-on-secondary);
+}
+
+.secondary-container {
+  background-color: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+}
+
+.tertiary{
+  background-color: var(--mat-sys-tertiary);
+  color: var(--mat-sys-on-tertiary);
+}
+
+.tertiary-container {
+  background-color: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+}
+
+.error {
+  background-color: var(--mat-sys-error);
+  color: var(--mat-sys-on-error);
+}
+
+.error-container {
+  background-color: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+}
+
+.color-item div {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  width: auto;
+  align-items: end;
+}
+
+.color-item-name {
+  font: var(--mat-sys-title-medium);
+}
+
+.color-item-code {
+  font: var(--mat-sys-title-small);
+  font-family: monospace;
 }

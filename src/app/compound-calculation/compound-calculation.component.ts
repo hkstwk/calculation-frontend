@@ -2,7 +2,14 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CalculationService} from '../services/calculation.service';
 import {DecimalPipe, NgIf} from '@angular/common';
-import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardImage,
+  MatCardTitle
+} from '@angular/material/card';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -20,6 +27,7 @@ import {MatButton} from '@angular/material/button';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {tap} from 'rxjs';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {ThemeMode, ThemeService} from '../services/theme.service';
 
 @Component({
   selector: 'app-compound-calculation',
@@ -52,7 +60,8 @@ import {MatGridList, MatGridTile} from '@angular/material/grid-list';
     MatCardContent,
     MatGridList,
     MatGridTile,
-    MatCardActions
+    MatCardActions,
+    MatCardImage
   ],
   styleUrls: ['./compound-calculation.component.scss']
 })
@@ -67,11 +76,13 @@ export class CompoundCalculationComponent implements AfterViewInit{
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  constructor(private fb: FormBuilder, private calculationService: CalculationService) {
+  constructor(private fb: FormBuilder, private calculationService: CalculationService, private themeService: ThemeService) {
     this.apiForm = this.fb.group({
-      originalPrincipalSum: [200000, Validators.required],
-      nominalAnnualInterestRate: [0.03, Validators.required],
+      originalPrincipalSum: [200, Validators.required],
+      nominalAnnualInterestRate: [0.04, Validators.required],
       compoundingFrequency: [12, Validators.required],
+      monthlyDeposit: [0, Validators.required],
+      depositAtStart: [true, Validators.required],
       time: [1, Validators.required],
       includeDetails: [true, Validators.required],
     });
@@ -84,13 +95,12 @@ export class CompoundCalculationComponent implements AfterViewInit{
     if (this.apiForm.valid) {
       this.calculationService.callApi(this.apiForm.value)
         .subscribe(data =>{
-          console.log(data);
+          console.log(data.details);
           this.details = data.details;
           this.length = this.details?.length;
           this.detailsDatasource = new MatTableDataSource(this.details);
           this.detailsDatasource.paginator = this.paginator;
           this.finalAmount = data.finalAmount;
-
           this.loadDetailsPage();
           console.log(this.detailsDatasource?.data);
         });
@@ -100,9 +110,11 @@ export class CompoundCalculationComponent implements AfterViewInit{
   clearForm() {
     console.log("Clear event");
     this.apiForm.reset({
-      originalPrincipalSum: 200000,
-      nominalAnnualInterestRate: 0.03,
+      originalPrincipalSum: 200,
+      nominalAnnualInterestRate: 0.04,
       compoundingFrequency: 12,
+      monthlyDeposit: 0,
+      depositAtStart: true,
       time: 1,
       includeDetails: true,
     });
@@ -150,4 +162,10 @@ export class CompoundCalculationComponent implements AfterViewInit{
     this.paginator.pageIndex = $event.pageIndex;
     this.loadDetailsPage();
   }
+
+  changeTheme(mode: ThemeMode) {
+    this.themeService.setTheme(mode);
+  }
+
+  protected readonly ThemeMode = ThemeMode;
 }

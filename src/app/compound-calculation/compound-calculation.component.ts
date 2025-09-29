@@ -27,7 +27,9 @@ import {MatButton} from '@angular/material/button';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {tap} from 'rxjs';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
-import {ThemeMode, ThemeService} from '../services/theme.service';
+import {ThemeMode, ThemePalette, ThemeService} from '../services/theme.service';
+import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-compound-calculation',
@@ -61,7 +63,10 @@ import {ThemeMode, ThemeService} from '../services/theme.service';
     MatGridList,
     MatGridTile,
     MatCardActions,
-    MatCardImage
+    MatCardImage,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    MatIcon
   ],
   styleUrls: ['./compound-calculation.component.scss']
 })
@@ -76,7 +81,7 @@ export class CompoundCalculationComponent implements AfterViewInit{
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  constructor(private fb: FormBuilder, private calculationService: CalculationService, private themeService: ThemeService) {
+  constructor(private fb: FormBuilder, private calculationService: CalculationService, protected themeService: ThemeService) {
     this.apiForm = this.fb.group({
       originalPrincipalSum: [200, Validators.required],
       nominalAnnualInterestRate: [0.04, Validators.required],
@@ -167,5 +172,11 @@ export class CompoundCalculationComponent implements AfterViewInit{
     this.themeService.setTheme(mode);
   }
 
+  changePalette(palette: ThemePalette) {
+    this.themeService.setPalette(palette);
+  }
+
   protected readonly ThemeMode = ThemeMode;
+  protected readonly ThemePallete = ThemePalette;
+  protected readonly ThemePalette = ThemePalette;
 }

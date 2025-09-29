@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$magenta-light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$magenta-palette,
+    tertiary: mat.$violet-palette
+  ),
+  typography: (
+    brand-family: 'Roboto',
+    plain-family: 'Roboto',
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+$magenta-dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$magenta-palette,
+    tertiary: mat.$violet-palette
+  ),
+  typography: (
+    brand-family: 'Roboto',
+    plain-family: 'Roboto',
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+.magenta-light-theme {
+  @include mat.theme($magenta-light-theme);
+}
+
+.magenta-dark-theme {
+  @include mat.theme($magenta-dark-theme);
+}

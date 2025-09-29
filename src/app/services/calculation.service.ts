@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root', // Provides this service in the root injector
 })
 export class CalculationService {
-  private apiUrl = 'http://localhost:32010/interest/compound';
+  private apiUrl = 'http://localhost:8080/interest/compound';
 
   constructor(private http: HttpClient) {}
 

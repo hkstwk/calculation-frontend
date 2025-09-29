@@ -6,23 +6,40 @@ export enum ThemeMode {
   DARK = 'dark',
 }
 
+export enum ThemePalette {
+  MAGENTA_VIOLET = 'magenta-violet',
+  AZURE_CYAN = 'azure-cyan',
+  GREEN_CHARTREUSE = 'green-chartreuse',
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
-  private storageKey = 'theme-preference';
+  private modeStorageKey = 'theme-preference';
+  private paletteStorageKey = 'theme-palette';
 
   constructor() {
     this.applyTheme(this.getStoredTheme() || ThemeMode.SYSTEM);
+    this.applyPalette(this.getStoredPalette() || ThemePalette.MAGENTA_VIOLET);
   }
 
   setTheme(mode: ThemeMode) {
-    localStorage.setItem(this.storageKey, mode);
+    localStorage.setItem(this.modeStorageKey, mode);
     this.applyTheme(mode);
   }
 
   getTheme(): ThemeMode {
     return this.getStoredTheme() || ThemeMode.SYSTEM;
+  }
+
+  setPalette(palette: ThemePalette) {
+    localStorage.setItem(this.paletteStorageKey, palette);
+    this.applyPalette(palette);
+  }
+
+  getPalette(): ThemePalette {
+    return this.getStoredPalette() || ThemePalette.MAGENTA_VIOLET;
   }
 
   private applyTheme(mode: ThemeMode) {
@@ -35,8 +52,23 @@ export class ThemeService {
     }
   }
 
+  private applyPalette(palette: ThemePalette) {
+    const html = document.documentElement;
+
+    if (palette === ThemePalette.MAGENTA_VIOLET) {
+      html.removeAttribute('data-palette'); // Default palette
+    } else {
+      html.setAttribute('data-palette', palette);
+    }
+  }
+
   private getStoredTheme(): ThemeMode | null {
-    const stored = localStorage.getItem(this.storageKey) as ThemeMode | null;
+    const stored = localStorage.getItem(this.modeStorageKey) as ThemeMode | null;
     return stored && Object.values(ThemeMode).includes(stored) ? stored : null;
+  }
+
+  private getStoredPalette(): ThemePalette | null {
+    const stored = localStorage.getItem(this.paletteStorageKey) as ThemePalette | null;
+    return stored && Object.values(ThemePalette).includes(stored) ? stored : null;
   }
 }

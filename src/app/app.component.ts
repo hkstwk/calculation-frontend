@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
 import {MatListItem, MatNavList} from '@angular/material/list';
 import {MatIcon} from '@angular/material/icon';
@@ -8,7 +8,8 @@ import {RouterLink, RouterOutlet} from '@angular/router';
 import {HttpClientModule, HttpHandler} from '@angular/common/http';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {ThemeMode, ThemePalette, ThemeService} from './services/theme.service';
-import {NgIf} from '@angular/common';
+import {AsyncPipe, DOCUMENT, NgIf} from '@angular/common';
+import {AuthService} from '@auth0/auth0-angular';
 
 @Component({
   imports: [
@@ -24,7 +25,8 @@ import {NgIf} from '@angular/common';
     MatButtonToggle,
     MatButtonToggleGroup,
     MatButton,
-    NgIf
+    NgIf,
+    AsyncPipe
   ],
   providers: [
     HttpClientModule],
@@ -41,7 +43,7 @@ export class AppComponent {
   isThemeMenuOpen = false;
   isPaletteMenuOpen = false;
 
-  constructor(public themeService: ThemeService) {}
+  constructor(public themeService: ThemeService, public authService: AuthService, @Inject(DOCUMENT) public document: Document) {}
 
   changeTheme(theme: ThemeMode): void {
     this.themeService.setTheme(theme);

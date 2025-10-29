@@ -17,8 +17,23 @@
         <span>Form</span>
       </a>
 
+      <a mat-list-item routerLink="/profile">
+        <mat-icon>persona</mat-icon>
+        <span>Profile</span>
+      </a>
+
     </mat-nav-list>
   </mat-sidenav>
+
+  <ng-container *ngIf="authService.isAuthenticated$ | async; else loggedOut">
+    <button (click)="authService.logout({ logoutParams: { returnTo: document.location.origin } })">
+      Log out
+    </button>
+  </ng-container>
+
+  <ng-template #loggedOut>
+    <button (click)="authService.loginWithRedirect()">Log in</button>
+  </ng-template>
 
   <mat-toolbar color="tertiary">
     <button mat-icon-button (click)="sidenav.open()">

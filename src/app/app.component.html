@@ -12,13 +12,93 @@
         <span>Drag & Drop</span>
       </a>
 
+      <a mat-list-item routerLink="/form">
+        <mat-icon>form</mat-icon>
+        <span>Form</span>
+      </a>
+
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-toolbar color="primary">
+  <mat-toolbar color="tertiary">
     <button mat-icon-button (click)="sidenav.open()">
       <mat-icon>menu</mat-icon>
     </button>
+
+    <span class="toolbar-spacer"></span>
+
+    <div class="theme-controls">
+      <div class="theme-control-wrapper">
+        <button
+          mat-button
+          class="theme-control-button"
+          (click)="toggleThemeMenu(); closePaletteMenu()"
+          [class.active]="isThemeMenuOpen">
+          <mat-icon>{{ getCurrentThemeIcon() }}</mat-icon>
+          <span>{{ getCurrentThemeLabel() }}</span>
+          <mat-icon class="dropdown-icon">{{ isThemeMenuOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+
+        <div class="theme-control-dropdown" *ngIf="isThemeMenuOpen">
+          <mat-button-toggle-group
+            [value]="themeService.getTheme()"
+            (change)="changeTheme($event.value); closeThemeMenu()"
+            aria-label="Color scheme"
+            appearance="standard"
+            vertical>
+            <mat-button-toggle [value]="ThemeMode.LIGHT">
+              <mat-icon>light_mode</mat-icon>
+              <span>Light</span>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="ThemeMode.DARK">
+              <mat-icon>dark_mode</mat-icon>
+              <span>Dark</span>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="ThemeMode.SYSTEM">
+              <mat-icon>brightness_auto</mat-icon>
+              <span>System</span>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+
+      <div class="theme-control-wrapper">
+        <button
+          mat-button
+          class="theme-control-button"
+          (click)="togglePaletteMenu(); closeThemeMenu()"
+          [class.active]="isPaletteMenuOpen">
+          <span class="palette-icon-wrapper">
+            <span class="palette-indicator {{getCurrentPaletteClass()}}"></span>
+          </span>
+          <span>{{ getCurrentPaletteLabel() }}</span>
+          <mat-icon class="dropdown-icon">{{ isPaletteMenuOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+
+        <div class="theme-control-dropdown" *ngIf="isPaletteMenuOpen">
+          <mat-button-toggle-group
+            [value]="themeService.getPalette()"
+            (change)="changePalette($event.value); closePaletteMenu()"
+            aria-label="Color palette"
+            appearance="standard"
+            vertical>
+            <mat-button-toggle [value]="ThemePalette.MAGENTA_VIOLET">
+              <span class="palette-indicator magenta-violet"></span>
+              <span>Magenta</span>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="ThemePalette.AZURE_CYAN">
+              <span class="palette-indicator azure-cyan"></span>
+              <span>Azure</span>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="ThemePalette.GREEN_CHARTREUSE">
+              <span class="palette-indicator green-chartreuse"></span>
+              <span>Green</span>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+    </div>
+
   </mat-toolbar>
 
   <router-outlet></router-outlet>

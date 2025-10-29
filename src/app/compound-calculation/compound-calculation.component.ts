@@ -11,25 +11,25 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import {
-  MatCell, MatCellDef,
+  MatCell,
+  MatCellDef,
   MatColumnDef,
   MatHeaderCell,
   MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef,
-  MatRow, MatRowDef,
-  MatTable, MatTableDataSource
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
+  MatTable,
+  MatTableDataSource
 } from '@angular/material/table';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
-import {MatDivider} from '@angular/material/divider';
 import {MatButton} from '@angular/material/button';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {tap} from 'rxjs';
-import {MatGridList, MatGridTile} from '@angular/material/grid-list';
-import {ThemeMode, ThemePalette, ThemeService} from '../services/theme.service';
-import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {MatIcon} from '@angular/material/icon';
+import {ThemeService} from '../services/theme.service';
 
 @Component({
   selector: 'app-compound-calculation',
@@ -49,7 +49,6 @@ import {MatIcon} from '@angular/material/icon';
     MatInput,
     FormsModule,
     MatSlideToggle,
-    MatDivider,
     ReactiveFormsModule,
     MatButton,
     MatHeaderCellDef,
@@ -60,13 +59,8 @@ import {MatIcon} from '@angular/material/icon';
     MatRowDef,
     MatPaginator,
     MatCardContent,
-    MatGridList,
-    MatGridTile,
     MatCardActions,
-    MatCardImage,
-    MatButtonToggleGroup,
-    MatButtonToggle,
-    MatIcon
+    MatCardImage
   ],
   styleUrls: ['./compound-calculation.component.scss']
 })
@@ -167,16 +161,4 @@ export class CompoundCalculationComponent implements AfterViewInit{
     this.paginator.pageIndex = $event.pageIndex;
     this.loadDetailsPage();
   }
-
-  changeTheme(mode: ThemeMode) {
-    this.themeService.setTheme(mode);
-  }
-
-  changePalette(palette: ThemePalette) {
-    this.themeService.setPalette(palette);
-  }
-
-  protected readonly ThemeMode = ThemeMode;
-  protected readonly ThemePallete = ThemePalette;
-  protected readonly ThemePalette = ThemePalette;
 }

@@ -1,49 +1,4 @@
 <div class="container">
-
-  <div class="theme-controls">
-    <div class="theme-control-group">
-<!--      <label class="theme-control-label">Color Scheme</label>-->
-      <mat-button-toggle-group
-        [value]="themeService.getTheme()"
-        (change)="changeTheme($event.value)"
-        aria-label="Color scheme">
-        <mat-button-toggle [value]="ThemeMode.LIGHT">
-          <mat-icon>light_mode</mat-icon>
-          Light
-        </mat-button-toggle>
-        <mat-button-toggle [value]="ThemeMode.DARK">
-          <mat-icon>dark_mode</mat-icon>
-          Dark
-        </mat-button-toggle>
-        <mat-button-toggle [value]="ThemeMode.SYSTEM">
-          <mat-icon>brightness_auto</mat-icon>
-          System
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-
-    <div class="theme-control-group">
-<!--      <label class="theme-control-label">Color Palette</label>-->
-      <mat-button-toggle-group
-        [value]="themeService.getPalette()"
-        (change)="changePalette($event.value)"
-        aria-label="Color palette">
-        <mat-button-toggle [value]="ThemePalette.MAGENTA_VIOLET">
-          <span class="palette-indicator magenta-violet"></span>
-          Magenta
-        </mat-button-toggle>
-        <mat-button-toggle [value]="ThemePalette.AZURE_CYAN">
-          <span class="palette-indicator azure-cyan"></span>
-          Azure
-        </mat-button-toggle>
-        <mat-button-toggle [value]="ThemePalette.GREEN_CHARTREUSE">
-          <span class="palette-indicator green-chartreuse"></span>
-          Green
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-  </div>
-
   <div class="color-scheme-section">
     <div class="color-item primary">
       <div class="color-item-name">Primary</div>

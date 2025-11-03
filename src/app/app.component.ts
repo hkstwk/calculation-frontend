@@ -10,6 +10,7 @@ import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-to
 import {ThemeMode, ThemePalette, ThemeService} from './services/theme.service';
 import {AsyncPipe, DOCUMENT, NgIf} from '@angular/common';
 import {AuthService} from '@auth0/auth0-angular';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   imports: [
@@ -26,7 +27,10 @@ import {AuthService} from '@auth0/auth0-angular';
     MatButtonToggleGroup,
     MatButton,
     NgIf,
-    AsyncPipe
+    AsyncPipe,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem
   ],
   providers: [
     HttpClientModule],

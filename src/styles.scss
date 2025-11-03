@@ -59,7 +59,7 @@ html[data-palette="green-chartreuse"] {
 
 *:focus {
   outline: none;
-  box-shadow: 0 0 0 8px var(--mat-sys-tertiary-container);
+  box-shadow: 0 0 0 4px var(--mat-sys-tertiary-container);
 }
 
 body {
@@ -76,40 +76,5 @@ body {
   overflow-y: scroll;
   background-color: var(--mat-sys-surface-container);
   color: var(--mat-sys-on-surface);
-}
-
-// Navigation list item styles
-mat-nav-list {
-  a[mat-list-item] {
-    .mat-mdc-list-item-unscoped-content {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.5rem;
-
-      mat-icon {
-        flex-shrink: 0;
-      }
-
-      span {
-        flex: 1;
-      }
-    }
-  }
-}
-
-// Theme control dropdown button toggle styles
-.theme-control-dropdown {
-  mat-button-toggle {
-    .mat-button-toggle-label-content {
-      display: flex;
-      align-items: center;
-      gap: 0.10rem !important;
-
-      mat-icon, .palette-indicator {
-        margin-right: 0.25rem;
-      }
-    }
-  }
 }
 

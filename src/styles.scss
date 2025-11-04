@@ -57,6 +57,17 @@ html[data-palette="green-chartreuse"] {
   ));
 }
 
+// orange-cyan-palette - respects color-scheme
+html[data-palette="orange-cyan"] {
+  @include mat.theme((
+    color: (
+      primary: mat.$orange-palette,
+      tertiary: mat.$cyan-palette,
+      theme-type: color-scheme
+    )
+  ));
+}
+
 *:focus {
   outline: none;
   box-shadow: 0 0 0 4px var(--mat-sys-tertiary-container);

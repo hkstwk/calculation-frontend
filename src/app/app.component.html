@@ -107,6 +107,15 @@
               <span>Green</span>
             </div>
           </button>
+          <button
+            mat-menu-item
+            (click)="changePalette(ThemePalette.ORANGE_CYAN)"
+            [class.active]="themeService.getPalette() === ThemePalette.ORANGE_CYAN">
+            <div class="palette-indicator-container">
+              <span class="palette-indicator orange-cyan"></span>
+              <span>Orange</span>
+            </div>
+          </button>
         </mat-menu>
       </div>
 

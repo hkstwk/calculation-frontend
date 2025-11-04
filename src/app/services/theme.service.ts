@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export enum ThemeMode {
   SYSTEM = 'system',
@@ -10,6 +10,7 @@ export enum ThemePalette {
   MAGENTA_VIOLET = 'magenta-violet',
   AZURE_CYAN = 'azure-cyan',
   GREEN_CHARTREUSE = 'green-chartreuse',
+  ORANGE_CYAN= 'orange-cyan'
 }
 
 @Injectable({

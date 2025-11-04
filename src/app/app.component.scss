@@ -35,6 +35,10 @@
   &.green-chartreuse {
     background: linear-gradient(135deg, #22c55e 0%, #84cc16 100%);
   }
+
+  &.orange-cyan  {
+    background: linear-gradient(135deg, #c86905 0%, rgba(230, 126, 0, 0.5) 100%);
+  }
 }
 
 mat-nav-list {

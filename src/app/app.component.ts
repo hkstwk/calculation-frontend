@@ -5,8 +5,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {RouterLink, RouterOutlet} from '@angular/router';
-import {HttpClientModule, HttpHandler} from '@angular/common/http';
-import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {HttpClientModule} from '@angular/common/http';
 import {ThemeMode, ThemePalette, ThemeService} from './services/theme.service';
 import {AsyncPipe, DOCUMENT, NgIf} from '@angular/common';
 import {AuthService} from '@auth0/auth0-angular';
@@ -23,8 +22,6 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
     MatSidenav,
     RouterLink,
     RouterOutlet,
-    MatButtonToggle,
-    MatButtonToggleGroup,
     MatButton,
     NgIf,
     AsyncPipe,
@@ -99,6 +96,7 @@ export class AppComponent {
       case ThemePalette.MAGENTA_VIOLET: return 'magenta-violet';
       case ThemePalette.AZURE_CYAN: return 'azure-cyan';
       case ThemePalette.GREEN_CHARTREUSE: return 'green-chartreuse';
+      case ThemePalette.ORANGE_CYAN: return 'orange-cyan';
       default: return 'magenta-violet';
     }
   }
@@ -109,6 +107,7 @@ export class AppComponent {
       case ThemePalette.MAGENTA_VIOLET: return 'Magenta';
       case ThemePalette.AZURE_CYAN: return 'Azure';
       case ThemePalette.GREEN_CHARTREUSE: return 'Green';
+      case ThemePalette.ORANGE_CYAN: return 'Orange';
       default: return 'Magenta';
     }
   }

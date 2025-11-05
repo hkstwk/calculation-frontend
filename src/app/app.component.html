@@ -68,7 +68,6 @@
           </button>
         </mat-menu>
       </div>
-
       <div class="theme-control-wrapper">
         <button
           mat-icon-button
@@ -118,27 +117,42 @@
           </button>
         </mat-menu>
       </div>
-
       <div class="auth-control">
-        <ng-container *ngIf="authService.isAuthenticated$ | async; else loggedOut">
-          <button
-            mat-stroked-button
-            class="auth-button logout-button"
-            (click)="authService.logout({ logoutParams: { returnTo: document.location.origin } })">
-            <mat-icon>logout</mat-icon>
-            <span>Log out</span>
-          </button>
-        </ng-container>
-        <ng-template #loggedOut>
-          <button
-            mat-raised-button
-            class="auth-button login-button"
-            color="primary"
-            (click)="authService.loginWithRedirect()">
-            <mat-icon>login</mat-icon>
-            <span>Log in</span>
-          </button>
-        </ng-template>
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="authMenu"
+          aria-label="Account menu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <mat-menu #authMenu="matMenu">
+          <ng-container *ngIf="authService.isAuthenticated$ | async; else loggedOutMenu">
+            <button
+              mat-menu-item
+              routerLink="/profile">
+              <mat-icon>person</mat-icon>
+              <span>Profile</span>
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="authService.logout()"
+              routerLink="/">
+              <mat-icon>logout</mat-icon>
+              <span>Log out</span>
+            </button>
+          </ng-container>
+
+          <ng-template #loggedOutMenu>
+            <button
+              mat-menu-item
+              (click)="authService.loginWithRedirect()"
+              routerLink="/">
+              <mat-icon>login</mat-icon>
+              <span>Log in</span>
+            </button>
+          </ng-template>
+        </mat-menu>
       </div>
     </div>
 

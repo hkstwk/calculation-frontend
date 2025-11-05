@@ -3,7 +3,7 @@ import {MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
 import {MatListItem, MatNavList} from '@angular/material/list';
 import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIconButton} from '@angular/material/button';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {ThemeMode, ThemePalette, ThemeService} from './services/theme.service';
@@ -22,7 +22,6 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
     MatSidenav,
     RouterLink,
     RouterOutlet,
-    MatButton,
     NgIf,
     AsyncPipe,
     MatMenuTrigger,

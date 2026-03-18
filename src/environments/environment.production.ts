@@ -1,10 +1,11 @@
 export const environment = {
   production: false,
   auth0: {
-    domain: 'hkstwk-prod.eu.auth0.com',
-    clientId: 'YOUR_PRODUCTION_CLIENT_ID',
+    enabled: true,
+    domain: 'hkstwk-dev.eu.auth0.com',
+    clientId: 'WrzInUOHu8t8veMHqhDiTDxtRnPIX7YA',
     redirectUri: window.location.origin,
-    audience: 'https://api.yourdomain.com',
-    apiUrl: 'https://api.yourdomain.com'
+    audience: 'http://localhost:8080',
+    apiUrl: 'http://localhost:8080'
   }
 };
